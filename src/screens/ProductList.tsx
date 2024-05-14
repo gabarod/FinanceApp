@@ -6,13 +6,14 @@ import {
   TextInput,
   View,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {ProductListProps} from '../interfaces/ProductListProps';
 import {Product} from '../interfaces/Product';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/ProductListStyles';
-import { BASE_URL, getProductList } from '../api/products';
+import { BASE_URL } from '../api/products';
 import axios from '../utils/axios-mock';
+
 
 const ProductList: React.FC<ProductListProps> = ({navigation}) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,14 +31,14 @@ const ProductList: React.FC<ProductListProps> = ({navigation}) => {
             'authorId': '123123123',
           },
         });
-        setLoading(false);
         const newProducts = response.data;
-        console.log('newProducts', newProducts);
-        setFilteredProducts(newProducts || []);
-        setProducts(newProducts || []);
+        setProducts(newProducts);
+        setFilteredProducts(newProducts);
+
       } catch (error) {
         console.error('Error fetching products:', error);
         setLoading(false);
+
       } finally {
         setLoading(false);
       }
@@ -65,19 +66,22 @@ const ProductList: React.FC<ProductListProps> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      { !!products && products?.length > 0 ? (
-      <>
+      
       <TextInput
-        placeholder="Buscar......"
+        placeholder="Buscar..."
         placeholderTextColor="black"
         value={searchQuery}
         onChangeText={handleSearch}
         style={styles.searchInput}
-      /><FlatList
+      />
+      { filteredProducts && filteredProducts?.length > 0 ? (
+      <SafeAreaView>
+      <FlatList
         data={filteredProducts}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => item.id}
         renderItem={({ item, index }) => (
           <TouchableOpacity
+            key={item.id}
             style={[
               styles.item,
               index === 0 ? styles.firstItem : {},
@@ -88,16 +92,19 @@ const ProductList: React.FC<ProductListProps> = ({navigation}) => {
               <Text style={styles.text}>{item.name}</Text>
               <Text style={styles.smallText}>ID: {item.id}</Text>
             </View>
-            <Icon name="chevron-right" size={20} color="gray" />
+            {/* <Icon name="chevron-small-right" size={20} color="gray" /> */}
+            <Text style={styles.text}>{'>'}</Text>
           </TouchableOpacity>
         )} />
-        </>
+        </SafeAreaView>
       ) : ( <Text style={styles.notFoundtext}>No hay productos</Text>)}
+        <View style={styles.footer}>
       <TouchableOpacity
           style={[styles.button, styles.addButton]}
           onPress={() => navigation.navigate('AddProduct')}>
           <Text>Agregar Producto</Text>
         </TouchableOpacity>
+        </View>
     </View>
   );
 };

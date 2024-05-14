@@ -22,6 +22,8 @@ const AddProduct = () => {
   const {product, errors, handleChange, handleSubmit, handleReset} =
     useProductForm({initialProduct, isEdit: false});
 
+
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
@@ -35,7 +37,6 @@ const AddProduct = () => {
           product={product}
         />
       </View>
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, styles.sendButton]}

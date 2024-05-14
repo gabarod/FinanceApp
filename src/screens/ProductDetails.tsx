@@ -6,36 +6,40 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import axios from '../utils/axios-mock';
 import {ProductDetailsProps} from '../interfaces/ProductDetailsProps';
 import {Product} from '../interfaces/Product';
 import DeleteProductModal from './DeleteProductModal';
 import styles from '../styles/ProductDetailsStyles';
-import { getProductById } from '../api/products';
+import { BASE_URL } from '../api/products';
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
   const {productId} = route.params;
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const initialProduct: Product = {
-    id: '',
-    name: '',
-    description: '',
-    logo: '',
-    date_release: '',
-    date_revision: '',
-  };
+
   useEffect(() => {
     const fetchProduct = async () => {
-      const newProduct = await getProductById(productId);
-      setProduct(newProduct || initialProduct);
+      try {
+        setLoading(true);
+        const newProduct = await axios.get(`${BASE_URL}/bp/products/${productId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'authorId': '123123123',
+          },
+        });
+        setProduct(newProduct.data);
+        setLoading(false);
+      }
+     catch (error) {
+      console.error('Error fetching product:', error);
       setLoading(false);
-    };
-    setLoading(true);
-    fetchProduct(); 
-
+    }
+  };
+    fetchProduct();
   }, [productId]);
 
   const toggleModal = () => {
@@ -47,7 +51,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
   };
 
   if (loading) {
-    return <Text>Cargando...</Text>;
+    return <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1, justifyContent: 'center' }} />;
   }
 
   return (

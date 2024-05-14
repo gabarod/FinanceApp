@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'space-between',
   },
   searchInput: {
     fontSize: 18,
@@ -30,13 +29,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   itemTextContainer: {
-    flexDirection: 'column',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   text: {
     fontSize: 16,
   },
   smallText: {
     fontSize: 14,
+    paddingEnd: 10,
   },
   button: {
     alignItems: 'center',
@@ -52,6 +54,13 @@ const styles = StyleSheet.create({
   notFoundtext: {
     fontSize: 16,
     textAlign: 'center',
+  },
+  footer: {
+    padding: 10,
+    width: '100%',
+    alignSelf: 'center',
+    position: 'absolute', 
+    bottom: 10,
   },
 });
 
