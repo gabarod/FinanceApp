@@ -3,7 +3,7 @@
 Proyecto de prueba que muestra el funcionamiento de un CRUD con pantalla de
 Lista de productos, agregar productos, editar producto y eliminar productos.
 
-![](https://github.com/gabarod/FinanceApp/FinanceApp-Demo2.gif)
+![](https://github.com/gabarod/FinanceApp/FinanceApp-Demo1.gif)
 
 ## Requisitos
 
