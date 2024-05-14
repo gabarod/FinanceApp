@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   updateButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#D3D3D3',
     color: 'black',
   },
 });

@@ -9,11 +9,11 @@ const useProductForm = ({initialProduct, isEdit}) => {
   const [product, setProduct] = useState<Product>(initialProduct);
   const [errors, setErrors] = useState<ProductErrors>({
     id: '',
-    nombre: '',
-    descripcion: '',
-    logoUrl: '',
-    fechaLiberacion: '',
-    fechaRevision: '',
+    name: '',
+    description: '',
+    logo: '',
+    date_release: '',
+    date_revision: '',
   });
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,11 +21,11 @@ const useProductForm = ({initialProduct, isEdit}) => {
     let isValid = true;
     const newErrors: ProductErrors = {
       id: '',
-      nombre: '',
-      descripcion: '',
-      logoUrl: '',
-      fechaLiberacion: '',
-      fechaRevision: '',
+      name: '',
+      description: '',
+      logo: '',
+      date_release: '',
+      date_revision: '',
     };
 
     if (!product.id) {
@@ -42,57 +42,57 @@ const useProductForm = ({initialProduct, isEdit}) => {
       }
     }
 
-    if (!product.nombre) {
-      newErrors.nombre = 'El nombre es requerido.';
+    if (!product.name) {
+      newErrors.name = 'El name es requerido.';
       isValid = false;
-    } else if (product.nombre.length < 5 || product.nombre.length > 100) {
-      newErrors.nombre = 'El nombre debe tener entre 5 y 100 caracteres.';
+    } else if (product.name.length < 5 || product.name.length > 100) {
+      newErrors.name = 'El name debe tener entre 5 y 100 caracteres.';
       isValid = false;
     }
 
-    if (!product.descripcion) {
-      newErrors.descripcion = 'La descripción es requerida.';
+    if (!product.description) {
+      newErrors.description = 'La descripción es requerida.';
       isValid = false;
     } else if (
-      product.descripcion.length < 10 ||
-      product.descripcion.length > 200
+      product.description.length < 10 ||
+      product.description.length > 200
     ) {
-      newErrors.descripcion =
+      newErrors.description =
         'La descripción debe tener entre 10 y 200 caracteres.';
       isValid = false;
     }
 
-    if (!product.logoUrl) {
-      newErrors.logoUrl = 'El logo es requerido.';
+    if (!product.logo) {
+      newErrors.logo = 'El logo es requerido.';
       isValid = false;
     }
 
-    if (!product.fechaLiberacion) {
-      newErrors.fechaLiberacion = 'La fecha de liberación es requerida.';
+    if (!product.date_release) {
+      newErrors.date_release = 'La fecha de liberación es requerida.';
       isValid = false;
     } else {
       const today = new Date();
-      const releaseDate = new Date(product.fechaLiberacion);
+      const releaseDate = new Date(product.date_release);
       if (releaseDate < today) {
-        newErrors.fechaLiberacion =
+        newErrors.date_release =
           'La fecha de liberación debe ser hoy o en el futuro.';
         isValid = false;
       }
     }
 
-    if (!product.fechaRevision) {
-      newErrors.fechaRevision = 'La fecha de revisión es requerida.';
+    if (!product.date_revision) {
+      newErrors.date_revision = 'La fecha de revisión es requerida.';
       isValid = false;
     } else {
-      const revisionDate = new Date(product.fechaRevision);
-      const releaseDate = new Date(product.fechaLiberacion);
+      const revisionDate = new Date(product.date_revision);
+      const releaseDate = new Date(product.date_release);
       const nextYear = new Date(releaseDate);
       nextYear.setFullYear(nextYear.getFullYear() + 1);
       if (
         revisionDate.toISOString().split('T')[0] !==
         nextYear.toISOString().split('T')[0]
       ) {
-        newErrors.fechaRevision =
+        newErrors.date_revision =
           'La fecha de revisión debe ser exactamente un año después de la fecha de liberación.';
         isValid = false;
       }
@@ -110,11 +110,11 @@ const useProductForm = ({initialProduct, isEdit}) => {
     setProduct(initialProduct);
     setErrors({
       id: '',
-      nombre: '',
-      descripcion: '',
-      logoUrl: '',
-      fechaLiberacion: '',
-      fechaRevision: '',
+      name: '',
+      description: '',
+      logo: '',
+      date_release: '',
+      date_revision: '',
     });
   };
 

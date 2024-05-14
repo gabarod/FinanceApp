@@ -1,19 +1,17 @@
-import {Product} from '../interfaces/Product';
+import axios from 'axios';
+import { Product } from '../interfaces/Product';
 
-const BASE_URL =
-  'https://tribu-ti-staffing-desarrollo-afangwbmcruchqfh.201.azurefd.net/api-t-msa-productosfinancieros';
+export const BASE_URL = 'http://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
 
 export const getProductList = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/bp/products`, {
-      method: 'GET',
+    const response = await axios.get(`${BASE_URL}/bp/products`, {
       headers: {
         'Content-Type': 'application/json',
-        authorId: 'author-id',
+        authorId: '123123123',
       },
     });
-    const products = await response.json();
-    return products;
+    return response.data;
   } catch (error) {
     console.error('Failed to fetch products:', error);
     return [];
@@ -22,15 +20,13 @@ export const getProductList = async () => {
 
 export const getProductById = async (productId: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/bp/products/${productId}`, {
-      method: 'GET',
+    const response = await axios.get(`${BASE_URL}/bp/products/${productId}`, {
       headers: {
         'Content-Type': 'application/json',
-        authorId: 'author-id',
+        authorId: '123123123',
       },
     });
-    const product = await response.json();
-    return product;
+    return response.data;
   } catch (error) {
     console.error('Failed to fetch product:', error);
     return null;
@@ -39,50 +35,45 @@ export const getProductById = async (productId: string) => {
 
 export const createProduct = async (product: Product) => {
   try {
-    const response = await fetch(`${BASE_URL}/bp/products`, {
-      method: 'POST',
+    const response = await axios.post(`${BASE_URL}/bp/products`, product, {
       headers: {
         'Content-Type': 'application/json',
-        authorId: 'author-id',
+        authorId: '123123123',
       },
-      body: JSON.stringify(product),
     });
-    return response.ok;
+    return response.status === 200;
   } catch (error) {
     console.error('Failed to create product:', error);
-    return {success: false};
+    return { success: false };
   }
 };
 
 export const updateProduct = async (product: Product) => {
   try {
-    const response = await fetch(`${BASE_URL}/bp/products/${product.id}`, {
-      method: 'PUT',
+    const response = await axios.put(`${BASE_URL}/bp/products/${product.id}`, product, {
       headers: {
         'Content-Type': 'application/json',
-        authorId: 'author-id',
+        authorId: '123123123',
       },
-      body: JSON.stringify(product),
     });
-    return response.ok;
+    return response.status === 200;
   } catch (error) {
     console.error('Failed to update product:', error);
-    return {success: false};
+    return { success: false };
   }
 };
 
 export const deleteProduct = async (productId: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/bp/products/${productId}`, {
-      method: 'DELETE',
+    const response = await axios.delete(`${BASE_URL}/bp/products/${productId}`, {
       headers: {
         'Content-Type': 'application/json',
-        authorId: 'author-id',
+        authorId: '123123123',
       },
     });
-    return response.ok;
+    return response.status === 200;
   } catch (error) {
     console.error('Failed to delete product:', error);
-    return {success: false};
+    return { success: false };
   }
 };

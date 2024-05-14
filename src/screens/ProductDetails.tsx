@@ -12,24 +12,30 @@ import {ProductDetailsProps} from '../interfaces/ProductDetailsProps';
 import {Product} from '../interfaces/Product';
 import DeleteProductModal from './DeleteProductModal';
 import styles from '../styles/ProductDetailsStyles';
+import { getProductById } from '../api/products';
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
   const {productId} = route.params;
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const initialProduct: Product = {
+    id: '',
+    name: '',
+    description: '',
+    logo: '',
+    date_release: '',
+    date_revision: '',
+  };
   useEffect(() => {
-    axios
-      .get(`/products/${productId}`)
-      .then((response: {data: React.SetStateAction<Product | null>}) => {
-        setProduct(response.data);
-        setLoading(false);
-      })
-      .catch((error: any) => {
-        console.error('Error al traer datos: ', error);
-        setLoading(false);
-      });
+    const fetchProduct = async () => {
+      const newProduct = await getProductById(productId);
+      setProduct(newProduct || initialProduct);
+      setLoading(false);
+    };
+    setLoading(true);
+    fetchProduct(); 
+
   }, [productId]);
 
   const toggleModal = () => {
@@ -55,20 +61,20 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.fieldName}>Nombre:</Text>
-              <Text style={styles.fieldValue}>{product.nombre}</Text>
+              <Text style={styles.fieldValue}>{product.name}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.fieldName}>Descripción:</Text>
-              <Text style={styles.fieldValue}>{product.descripcion}</Text>
+              <Text style={styles.fieldValue}>{product.description}</Text>
             </View>
-            <Image source={{uri: product.logoUrl}} style={styles.logo} />
+            <Image source={{uri: product.logo}} style={styles.logo} />
             <View style={styles.detailRow}>
               <Text style={styles.fieldName}>Fecha Liberación:</Text>
-              <Text style={styles.fieldValue}>{product.fechaLiberacion}</Text>
+              <Text style={styles.fieldValue}>{product.date_release}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.fieldName}>Fecha Revisión:</Text>
-              <Text style={styles.fieldValue}>{product.fechaRevision}</Text>
+              <Text style={styles.fieldValue}>{product.date_revision}</Text>
             </View>
           </>
         ) : (
@@ -91,7 +97,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
           </View>
           <DeleteProductModal
             productId={product.id}
-            name={product.nombre}
+            name={product.name}
             visible={modalVisible}
             onClose={onCloseModal}
           />
@@ -102,3 +108,4 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({navigation, route}) => {
 };
 
 export default ProductDetails;
+

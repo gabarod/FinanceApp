@@ -12,11 +12,11 @@ import styles from '../styles/AddProductStyles';
 const AddProduct = () => {
   const initialProduct: Product = {
     id: '',
-    nombre: '',
-    descripcion: '',
-    logoUrl: '',
-    fechaLiberacion: '',
-    fechaRevision: '',
+    name: '',
+    description: '',
+    logo: '',
+    date_release: '',
+    date_revision: '',
   };
 
   const {product, errors, handleChange, handleSubmit, handleReset} =
@@ -27,7 +27,7 @@ const AddProduct = () => {
       <View style={styles.formContainer}>
         <Text style={styles.header}>Formulario de Registro</Text>
         <ProductForm
-          isEditing={true}
+          isEditing={false}
           errors={errors}
           handleSubmit={handleSubmit}
           handleChange={handleChange}

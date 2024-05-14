@@ -1,25 +1,23 @@
 import React, {useEffect} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import axios from '../utils/axios-mock';
 import {EditProductProps} from '../interfaces/EditProductProps';
 import {Product} from '../interfaces/Product';
 import useProductForm from '../hooks/useProductForm';
 import ProductForm from '../components/ProductForm';
 import styles from '../styles/EditProductStyles';
+import { getProductById } from '../api/products';
 
 const EditProduct: React.FC<EditProductProps> = ({route}) => {
   const {productId} = route.params;
+  console.log('productId',productId);
   const initialProduct: Product = {
     id: '',
-    nombre: '',
-    descripcion: '',
-    logoUrl: '',
-    fechaLiberacion: '',
-    fechaRevision: '',
+    name: '',
+    description: '',
+    logo: '',
+    date_release: '',
+    date_revision: '',
   };
   const {
     product,
@@ -33,16 +31,14 @@ const EditProduct: React.FC<EditProductProps> = ({route}) => {
   } = useProductForm({initialProduct, isEdit: true});
 
   useEffect(() => {
-    axios
-      .get(`/products/${productId}`)
-      .then((response) => {
-        setProduct(response.data);
-        setLoading(false);
-      })
-      .catch((error: any) => {
-        console.error('Error fetching product details:', error);
-        setLoading(false);
-      });
+    const fetchProduct = async () => {
+      const newProduct = await getProductById(productId);
+      setProduct(newProduct || initialProduct);
+      setLoading(false);
+    };
+    setLoading(true);
+    fetchProduct(); 
+
   }, [productId]);
 
   if (loading) {
@@ -51,7 +47,7 @@ const EditProduct: React.FC<EditProductProps> = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Formulario de Edición</Text>
+      <Text style={styles.header}>Formulario de Edición {productId}</Text>
       <ProductForm
         isEditing={true}
         errors={errors}

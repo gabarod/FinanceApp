@@ -72,15 +72,6 @@ const ProductForm = ({
       {errors.fechaRevision && (
         <Text style={styles.errorText}>{errors.fechaRevision}</Text>
       )}
-
-      <View style={styles.buttonContainer}>
-        <Button
-          title={isEditing ? 'Actualizar' : 'Agregar'}
-          onPress={handleFormSubmit}
-          color="#D3D3D3"
-        />
-        <Button title="Reiniciar" onPress={handleReset} color="#FF6347" />
-      </View>
     </View>
   );
 };
@@ -88,7 +79,7 @@ const ProductForm = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
   },
   header: {
     fontSize: 30,

@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFDD01',
     color: 'black',
   },
+  notFoundtext: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
 });
 
 export default styles;

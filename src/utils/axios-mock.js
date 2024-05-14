@@ -1,9 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { BASE_URL } from '../api/products';
 
 const instance = axios.create({
-  baseURL:
-    'https://tribu-ti-staffing-desarrollo-afangwbmcruchqfh.201.azurefd.net/api-t-msa-productosfinancieros',
+  baseURL: BASE_URL,
 });
 
 const mock = new MockAdapter(instance);
@@ -11,71 +11,71 @@ const mock = new MockAdapter(instance);
 const products = [
   {
     id: '123455',
-    nombre: 'Tarjeta Platino',
-    descripcion: 'Tarjeta de crédito con límite alto y beneficios exclusivos.',
-    logoUrl:
+    name: 'Tarjeta Platino',
+    description: 'Tarjeta de crédito con límite alto y beneficios exclusivos.',
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-01-01',
-    fechaRevision: '2024-01-01',
+    date_release: '2023-01-01',
+    date_revision: '2024-01-01',
   },
   {
     id: '123456',
-    nombre: 'Cuenta Corriente',
-    descripcion: 'Cuenta para manejo diario con mínimo costo de mantenimiento.',
-    logoUrl:
+    name: 'Cuenta Corriente',
+    description: 'Cuenta para manejo diario con mínimo costo de mantenimiento.',
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-02-01',
-    fechaRevision: '2024-02-01',
+    date_release: '2023-02-01',
+    date_revision: '2024-02-01',
   },
   {
     id: '123457',
-    nombre: 'Fondo de Inversión',
-    descripcion:
+    name: 'Fondo de Inversión',
+    description:
       'Fondo que ofrece diversificación y rendimientos competitivos.',
-    logoUrl:
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-03-01',
-    fechaRevision: '2024-03-01',
+    date_release: '2023-03-01',
+    date_revision: '2024-03-01',
   },
 ];
 
 const productDetails = {
   123455: {
     id: '123455',
-    nombre: 'Tarjeta Platino',
-    descripcion:
+    name: 'Tarjeta Platino',
+    description:
       'Detalle completo de la Tarjeta Platino, incluyendo todos los beneficios y condiciones.',
-    logoUrl:
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-01-01',
-    fechaRevision: '2024-01-01',
+    date_release: '2023-01-01',
+    date_revision: '2024-01-01',
   },
   123456: {
     id: '123456',
-    nombre: 'Cuenta Corriente',
-    descripcion:
+    name: 'Cuenta Corriente',
+    description:
       'Detalle completo de la Cuenta Corriente, incluyendo tarifas y acceso a servicios.',
-    logoUrl:
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-02-01',
-    fechaRevision: '2024-02-01',
+    date_release: '2023-02-01',
+    date_revision: '2024-02-01',
   },
   123457: {
     id: '123457',
-    nombre: 'Fondo de Inversión',
-    descripcion:
+    name: 'Fondo de Inversión',
+    description:
       'Descripción completa del Fondo de Inversión, estrategias de inversión y objetivos.',
-    logoUrl:
+    logo:
       'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    fechaLiberacion: '2023-03-01',
-    fechaRevision: '2024-03-01',
+    date_release: '2023-03-01',
+    date_revision: '2024-03-01',
   },
 };
 
-mock.onGet('/products').reply(200, products);
+mock.onGet('/bp/products').reply(200, products);
 
 Object.keys(productDetails).forEach(key => {
-  mock.onGet(`/products/${key}`).reply(200, productDetails[key]);
+  mock.onGet(`/bp/products/${key}`).reply(200, productDetails[key]);
 });
 
 export default instance;
